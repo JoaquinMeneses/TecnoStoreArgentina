@@ -13,20 +13,18 @@ const handlerMongoURIValidator = async () => {
 
 async function connectDB() {
 	if (handlerConnectionState()) return "MongoDB already connected";
-	await handlerMongoURIValidator();
 	try {
+		await handlerMongoURIValidator();
 		await mongoose.connect(process.env.MONGODB_URI);
 		console.log(`MongoDB connected`);
-		return {
-			status: 200,
-			message: "MongoDB connection success"
-		};
+		return Promise.resolve(
+			{
+				message: "MongoDB connection success"
+			}
+		);
 	} catch (error) {
-		console.error("MongoDB connection error:", error);
-		return {
-			status: 400,
-			message: "MongoDB connection error:" + error
-		};
+		console.log(error);
+		return Promise.reject(error);
 	}
 }
 
