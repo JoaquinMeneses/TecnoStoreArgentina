@@ -10,9 +10,12 @@ export async function GET(request) {
         const product = await Product.findById(id);
         return NextResponse.json(product);
     } catch (error) {
-        return NextResponse.json({
-			status: 404,
-			message: "Error finding product:" + error,
-		});
+        return NextResponse.json(
+            {
+                message: "Error finding product:" + error.message,
+            },
+            {
+                status: 404,
+            });
     }
 }

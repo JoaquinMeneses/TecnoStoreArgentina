@@ -8,14 +8,20 @@ export async function POST(request) {
         const data = await request.json();
         const newProduct = new Product(data);
         const uploadedProduct = await newProduct.save();
-        return NextResponse.json(uploadedProduct, {
-            status: 200,
-            message: "Product uploaded correctly"
-        });
+        return NextResponse.json(uploadedProduct,
+            {
+                message: "Product uploaded correctly"
+            },
+            {
+                status: 200,
+            });
     } catch (error) {
-        return NextResponse.json({
-			status: 400,
-			message: "Error uploading product:" + error,
-		});
+        return NextResponse.json(
+            {
+                message: "Error uploading product:" + error.message,
+            },
+            {
+                status: 400,
+            });
     }
 }

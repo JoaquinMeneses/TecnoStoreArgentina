@@ -8,14 +8,20 @@ export async function DELETE(request) {
     const id = searchParams.get("id");
     try {
         await Product.findByIdAndDelete(id);
-        return NextResponse.json({
-            status: 200,
-            message: "Product deleted correctly"
-        });
+        return NextResponse.json(
+            {
+                message: "Product deleted correctly"
+            },
+            {
+                status: 200,
+            });
     } catch (error) {
-        return NextResponse.json({
-			status: 400,
-			message: "Error deleting product:" + error,
-		});
+        return NextResponse.json(
+            {
+                message: "Error deleting product:" + error.message,
+            },
+            {
+                status: 400,
+            });
     }
 }
