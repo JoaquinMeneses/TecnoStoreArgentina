@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/connectDB";
 import Product from "@/backend/models/Product";
+import checkProduct from "@/backend/middlewares/checkProduct";
 
 export async function GET(request) {
     await connectDB();
@@ -8,7 +9,7 @@ export async function GET(request) {
     const id = searchParams.get("id");
     try {
         const product = await Product.findById(id);
-        return NextResponse.json(product);
+        return checkProduct(product);
     } catch (error) {
         return NextResponse.json(
             {

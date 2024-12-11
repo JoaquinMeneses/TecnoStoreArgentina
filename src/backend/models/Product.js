@@ -1,3 +1,4 @@
+import { strict } from "assert";
 import mongoose from "mongoose";
 
 const ProductSchema = new mongoose.Schema(
@@ -38,6 +39,7 @@ const ProductSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
+        strict: true
     },
 );
 

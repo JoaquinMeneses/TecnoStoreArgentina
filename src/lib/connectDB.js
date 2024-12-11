@@ -1,15 +1,8 @@
 import mongoose from "mongoose";
-
-const handlerConnectionState = () => {
-	return mongoose.connection.readyState === 1;
-}
-
-const handlerMongoURIValidator = async () => {
-	const MONGODB_URI = process.env.MONGODB_URI;
-	if (!MONGODB_URI) {
-		throw new Error("MongoDB URI not found.");
-	}
-}
+import {
+	handlerConnectionState,
+	handlerMongoURIValidator,
+} from "@/backend/middlewares/mongodbHandlers";
 
 async function connectDB() {
 	if (handlerConnectionState()) return "MongoDB already connected";
@@ -17,11 +10,9 @@ async function connectDB() {
 		await handlerMongoURIValidator();
 		await mongoose.connect(process.env.MONGODB_URI);
 		console.log(`MongoDB connected`);
-		return Promise.resolve(
-			{
-				message: "MongoDB connection success"
-			}
-		);
+		return Promise.resolve({
+			message: "MongoDB connection success",
+		});
 	} catch (error) {
 		console.log(error);
 		return Promise.reject(error);
